@@ -1,0 +1,87 @@
+/** Reset padding, margin **/
+body {
+  padding: 0;
+  margin: 0;
+}
+
+/** Default element styling **/
+ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+/** Common Classes **/
+.border-box {
+  border: 1px solid #d5d5d5;
+  border-radius: 5px;
+}
+
+/** Container **/
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  height: 100vh;
+  margin: 5%;
+}
+
+/** Container elements **/
+.container > * {
+  flex: auto;
+}
+
+.container>form {
+  width: 100%;
+}
+
+/** Company List **/
+.companies-list { 
+  font-size: 13px;
+  text-transform: uppercase;
+  font-weight: bold;
+  height: 25%;
+  max-height: 200px;
+  overflow: scroll;
+}
+
+.companies-list>li {
+  border-bottom: 1px solid #d5d5d5;
+  padding: 0 10px;
+  line-height: 49px;
+}
+
+.companies-list>li:last-child {
+  border-bottom: none;
+}
+
+/** Line Chart SVG **/
+#line-chart {
+  width: 100%;
+  margin-top: 10px;
+}
+
+/** For large screen devices **/
+@media all and (min-width: 950px) {
+  /** Container **/
+  .container {
+    flex-direction: row;
+  }
+
+  .container > * {
+    flex: 1;
+  }
+
+  /** Companies list **/
+  .companies-list { 
+    height: min-content;
+    max-height: 80vh;
+    font-size: 18px;
+  }
+
+  /** Line Chart SVG **/
+  #line-chart {
+    margin: 0 10px;
+  }
+
+}
