@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import stockData from './data/data.json';
 import LineChart from './components/LineChart';
+import 'react-dates/initialize';
+import { DateRangePicker } from 'react-dates';
+import 'react-dates/lib/css/_datepicker.css';
 import './App.css';
 
 //Declare var for stocks and arr
@@ -11,9 +14,8 @@ class App extends Component {
     super();
 
     this.state = {
-      company: {}
+      lineChartData: {}
     }
-
   }
 
   componentWillMount() {
@@ -38,31 +40,75 @@ class App extends Component {
     });
   }
 
+  getArrFromRange() {
+    // Set arr to companies
+    const arr = this.state.companies.data;
+    let startIndex, endIndex;
+
+    if(this.state.startDate && this.state.endDate) {
+      //Find startDate index in arr
+      startIndex = arr.findIndex((obj) => {
+        return new Date(obj.date) >= this.state.startDate;
+      });
+
+      //Find endDate index in arr
+      endIndex = arr.slice().reverse().findIndex((obj) => {
+        return new Date(obj.date) <= this.state.endDate;
+      });
+      var count = arr.length - 1;
+      var finalEndIndex = endIndex >=0 ? (count - endIndex) : endIndex;
+
+      //Get new array from range
+      var data = { data: arr.slice(startIndex, finalEndIndex)};
+
+      //Update state only if both dates are valid
+      if(startIndex !== -1 && finalEndIndex !== -1) {
+        this.setState({ lineChartData: data });
+      }
+    }
+  }
+
   render() {
     //Generate LI of companies
     const listItems = Object.keys(stocks).map((value) => 
-      <li key={value}>
-        <label>
-          <input 
-            type="radio" 
-            value={value} 
-            name="companyName"
-            onChange={(e) => this.setState({ company: stocks[value] })} /> 
-          {value}
-        </label>
+      <li key={value}
+          className={this.state.activeLink === value ? 'list-group-item active' : 'list-group-item'}
+          onClick={(e) => this.setState({ lineChartData: stocks[value], companies: stocks[value], activeLink: value })}
+      >
+        {value}
       </li>
     );
 
     return (
-      <div className="container">
-        <form>
-          <ul className="companies-list border-box">{listItems}</ul>
-        </form>
+      <div className="container stocks-container">
+        <h1 className="text-center m-t-5 m-b-5">Historical Stock Data</h1>
+        {/** Render SVG if companies exsit **/}
+        {Object.keys(this.state.lineChartData).length > 0 ?
+          <div>
+            <div className="d-flex flex-sm-row flex-column justify-content-lg-between">
+              <h3 className="text-left mr-auto p-1">Displaying data of: {this.state.activeLink}</h3>
+              
+              <div className="p-1">
+                {/** Date range picker - react-dates **/}
+                <DateRangePicker
+                  startDate={this.state.startDate} 
+                  startDateId="startDate"
+                  endDate={this.state.endDate}
+                  endDateId="endDate"
+                  onDatesChange={({ startDate, endDate }) => this.setState({ startDate, endDate }, this.getArrFromRange)} 
+                  focusedInput={this.state.focusedInput} 
+                  onFocusChange={focusedInput => this.setState({ focusedInput })}
+                  small={true} 
+                  isOutsideRange={() => false}
+                />
+              </div>
+            </div>
 
-      {/** Render SVG if companies exsit **/}
-        {Object.keys(this.state.company).length > 0 ?
-          <LineChart chartData={this.state.company} /> : null
+            <LineChart chartData={this.state.lineChartData} />
+          </div> : 
+          <h3 className="text-left">Select a company</h3>
         }
+          <ul className="list-group border-box">{listItems}</ul>
       </div>
     );
   }

@@ -2,6 +2,7 @@
 body {
   padding: 0;
   margin: 0;
+  font-family: 'Roboto', sans-serif;
 }
 
 /** Default element styling **/
@@ -11,77 +12,66 @@ ul {
   list-style: none;
 }
 
+.stocks-container>h1 {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.stocks-container>h3 {
+  font-size: 0.9em;
+}
+
 /** Common Classes **/
 .border-box {
-  border: 1px solid #d5d5d5;
+  border: 1px solid #ddd;
   border-radius: 5px;
 }
 
-/** Container **/
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  height: 100vh;
-  margin: 5%;
+.m-t-5 {
+  margin-top: 5%;
 }
 
-/** Container elements **/
-.container > * {
-  flex: auto;
+.m-b-5 {
+  margin-bottom: 5%;
 }
 
-.container>form {
-  width: 100%;
+/** List Group **/
+.stocks-container .list-group-item {
+  cursor: pointer;
+  font-size: 0.7em;
+  z-index: 0;
 }
 
-/** Company List **/
-.companies-list { 
-  font-size: 13px;
-  text-transform: uppercase;
-  font-weight: bold;
-  height: 25%;
-  max-height: 200px;
-  overflow: scroll;
-}
-
-.companies-list>li {
-  border-bottom: 1px solid #d5d5d5;
-  padding: 0 10px;
-  line-height: 49px;
-}
-
-.companies-list>li:last-child {
-  border-bottom: none;
+.stocks-container .list-group-item:hover {
+  background-color: rgba(0, 125, 255, 0.65);
+  border-color: rgba(0, 125, 255, 0.65);
+  color: #fff;
 }
 
 /** Line Chart SVG **/
-#line-chart {
-  width: 100%;
-  margin-top: 10px;
+.chart {
+  margin: 5% 0;
+}
+
+.chart>svg {
+  background-color: #fbfbfb;
+  opacity: 0.9;
 }
 
 /** For large screen devices **/
 @media all and (min-width: 950px) {
-  /** Container **/
-  .container {
-    flex-direction: row;
-  }
-
-  .container > * {
-    flex: 1;
-  }
-
-  /** Companies list **/
-  .companies-list { 
-    height: min-content;
-    max-height: 80vh;
-    font-size: 18px;
-  }
-
   /** Line Chart SVG **/
-  #line-chart {
-    margin: 0 10px;
+  .chart {
+    margin: 0 0 5% 0;
+  }
+
+  .stocks-container>h1 {
+    font-size: 2.5em;
+  }
+
+  .stocks-container>h3, 
+  .stocks-container .list-group-item  {
+    font-size: 1em;
   }
 
 }

@@ -1,5 +1,44 @@
 .line {
+	fill: none;
+	stroke: #7ea7ba;
+	stroke-width: 1px;
+}
+
+.axis-name {
+	text-anchor: end;
+	fill: #333;
+}
+
+.overlay {
   fill: none;
-  stroke: steelblue;
-  stroke-width: 1px;
+  pointer-events: all;
+}
+
+.focus {
+  opacity: 0.7;
+}
+
+.focus circle {
+  fill: none;
+  stroke: black;
+}
+
+.focus line {
+  fill: none;
+  stroke: black;
+  stroke-width: 1.5px;
+  stroke-dasharray: 3 3;
+}
+
+div.tooltip {
+  position: absolute;
+  text-align: center;
+  width: 60px;
+  height: 35px;
+  padding: 2px;
+  margin-top: -20px;
+  font-size: 10px;
+  background: #b3c6de;
+  color: #333;
+  pointer-events: none;
 }
