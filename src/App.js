@@ -14,7 +14,8 @@ class App extends Component {
     super();
 
     this.state = {
-      lineChartData: {}
+      lineChartData: {},
+      validRangeMsg: ''
     }
   }
 
@@ -63,7 +64,12 @@ class App extends Component {
 
       //Update state only if both dates are valid
       if(startIndex !== -1 && finalEndIndex !== -1) {
-        this.setState({ lineChartData: data });
+        this.setState({ 
+          lineChartData: data,
+          validRangeMsg: '' 
+        });
+      } else if(startIndex === -1 || finalEndIndex === -1) {
+        this.setState({ validRangeMsg: 'The date entered is out of range.' })
       }
     }
   }
@@ -73,11 +79,18 @@ class App extends Component {
     const listItems = Object.keys(stocks).map((value) => 
       <li key={value}
           className={this.state.activeLink === value ? 'list-group-item active' : 'list-group-item'}
-          onClick={(e) => this.setState({ lineChartData: stocks[value], companies: stocks[value], activeLink: value })}
+          style={{cursor: 'pointer'}}
+          onClick={(e) => this.setState({ 
+            lineChartData: stocks[value], 
+            companies: stocks[value], 
+            activeLink: value })}
       >
         {value}
       </li>
     );
+
+    //Check device viewport
+    const smallDevice = window.matchMedia('(max-width: 400px)').matches;
 
     return (
       <div className="container stocks-container">
@@ -85,30 +98,44 @@ class App extends Component {
         {/** Render SVG if companies exsit **/}
         {Object.keys(this.state.lineChartData).length > 0 ?
           <div>
-            <div className="d-flex flex-sm-row flex-column justify-content-lg-between">
-              <h3 className="text-left mr-auto p-1">Displaying data of: {this.state.activeLink}</h3>
+            <div className="d-flex flex-column">
+              <h3 className="text-left mr-auto p-1">Displaying data of stock {this.state.activeLink}</h3>
               
               <div className="p-1">
-                {/** Date range picker - react-dates **/}
+
+                {/** Date range picker - Set props for picker **/}
                 <DateRangePicker
                   startDate={this.state.startDate} 
                   startDateId="startDate"
                   endDate={this.state.endDate}
                   endDateId="endDate"
+                  startDatePlaceholderText={'MM/DD/YYYY'}
+                  endDatePlaceholderText={'MM/DD/YYYY'}
                   onDatesChange={({ startDate, endDate }) => this.setState({ startDate, endDate }, this.getArrFromRange)} 
                   focusedInput={this.state.focusedInput} 
                   onFocusChange={focusedInput => this.setState({ focusedInput })}
-                  small={true} 
+                  keepFocusOnInput={true} 
+                  small={true}
+                  orientation={smallDevice ? 'vertical' : 'horizontal'}
+                  showClearDates={true}
                   isOutsideRange={() => false}
                 />
+
               </div>
             </div>
 
+            {/** Error message if date entered is out of range **/}
+            {this.state.validRangeMsg.length > 0 &&
+              <p style={{ color: 'red' }}>{this.state.validRangeMsg}</p>
+            }
             <LineChart chartData={this.state.lineChartData} />
           </div> : 
-          <h3 className="text-left">Select a company</h3>
+          <h3 className="text-left">Select a Stock</h3>
         }
-          <ul className="list-group border-box">{listItems}</ul>
+          <ul className="list-group">
+            <li className='list-group-item list-group-item-info'>STOCK NAME</li>
+            {listItems}
+          </ul>
       </div>
     );
   }

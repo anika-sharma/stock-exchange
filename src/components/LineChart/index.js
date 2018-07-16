@@ -34,7 +34,7 @@ class LineChart extends Component {
     var svg = d3.selectAll(".chart>svg").remove();
 
     //Set the dimensions and margins of the graph
-    var margin = {top: 20, right: 10, bottom: 35, left: 50},
+    var margin = {top: 20, right: 50, bottom: 35, left: 50},
         width = 960 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
     
@@ -128,7 +128,7 @@ class LineChart extends Component {
     // Tooltip  
     var div = d3.select("body").append("div")
                                .attr("class", "tooltip")
-                              .style("opacity", 0);
+                               .style("opacity", 0);
 
     function mousemove() {
       // Get data from mouse location on svg

@@ -8,7 +8,7 @@
   "dependencies": {
     "d3": "^5.5.0",
     "react": "^16.4.1",
-    "react-dates": "^17.0.0",
+    "react-dates": "^17.1.0",
     "react-dom": "^16.4.1"
   },
   "scripts": {
