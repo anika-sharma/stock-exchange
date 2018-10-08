@@ -2,6 +2,7 @@
 body {
   padding: 0;
   margin: 0;
+  background-color: #f1f1f1;
   font-family: 'Roboto', sans-serif;
 }
 
@@ -15,10 +16,13 @@ ul {
 .stocks-container>h1 {
   font-size: 1.75em;
   font-weight: bold;
+  text-transform: uppercase;
+  color: #444;
 }
 
-.stocks-container h3 {
-  font-size: 1.25em;
+.stocks-container h2 {
+  font-size: 1.20em;
+  color: #444;
 }
 
 /** Common Classes **/
@@ -33,13 +37,19 @@ ul {
 /** List Group **/
 .stocks-container .list-group-item {
   font-size: 1em;
+  color: #333;
   z-index: 0;
 }
 
-.stocks-container .list-group-item:not(:first-child):hover {
-  background-color: rgba(0, 125, 255, 0.65);
-  border-color: rgba(0, 125, 255, 0.65);
-  color: #fff;
+.stocks-container .list-group-item:not(:first-child):hover,
+.list-group .active {
+  background-color: #f5f5f5;
+  border-color: #f5f5f5;
+}
+
+.list-group .active {
+  background-color: #e5e5e5;
+  border-color: #e5e5e5;
 }
 
 /** Line Chart SVG **/
@@ -48,7 +58,7 @@ ul {
 }
 
 .chart>svg {
-  background-color: #f1f1f1;
+  background-color: #fff;
   opacity: 0.9;
 }
 

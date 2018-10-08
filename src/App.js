@@ -94,12 +94,13 @@ class App extends Component {
 
     return (
       <div className="container stocks-container">
-        <h1 className="text-center m-t-5 m-b-5">Historical Stock Data</h1>
+        <h1 className="text-center m-t-5">Historical Stock Data</h1>
+        <hr className="m-b-5" />
         {/** Render SVG if companies exsit **/}
         {Object.keys(this.state.lineChartData).length > 0 ?
           <div>
             <div className="d-flex flex-column">
-              <h3 className="text-left mr-auto p-1">Displaying data of stock {this.state.activeLink}</h3>
+              <h2 className="text-left mr-auto p-1">Displaying stock of <span className="font-weight-bold">{this.state.activeLink}</span></h2>
               
               <div className="p-1">
 
@@ -130,10 +131,10 @@ class App extends Component {
             }
             <LineChart chartData={this.state.lineChartData} />
           </div> : 
-          <h3 className="text-left">Select a Stock</h3>
+          <h2 className="text-left font-weight-bold">Select a Stock</h2>
         }
-          <ul className="list-group">
-            <li className='list-group-item list-group-item-info'>STOCK NAME</li>
+          <ul className="list-group m-b-5">
+            <li className='list-group-item list-group-item-info'><b>STOCK NAME</b></li>
             {listItems}
           </ul>
       </div>
